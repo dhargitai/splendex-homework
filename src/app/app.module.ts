@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatchComponent } from './match/match.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, MatchComponent],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

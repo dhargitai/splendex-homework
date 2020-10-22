@@ -1,0 +1,90 @@
+:host {
+  width: 100%;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-column-gap: 5px;
+
+  img {
+    margin-right: auto;
+  }
+
+  div[role="controls"] {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+
+    select {
+      margin: 0;
+    }
+  }
+}
+
+#stats {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#board {
+  display: flex;
+  flex-flow: wrap;
+  row-gap: 25px;
+  justify-content: space-evenly;
+
+  .card {
+    flex: 1;
+    width: 150px;
+    max-width: 150px;
+    min-width: 150px;
+    height: 150px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: -1px 6px 4px -6px black;
+    border: 1px solid #ddd;
+
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 50%;
+
+    div {
+      display: block;
+      height: 100%;
+      width: 100%;
+      line-height: 260px;
+      color: white;
+      text-align: center;
+      font-weight: bold;
+      position: absolute;
+      backface-visibility: hidden;
+
+      img {
+        width: 70%;
+        height: 70%;
+      }
+    }
+    .front {
+    }
+    .back {
+      // background: blue;
+      transform: rotateY(180deg);
+    }
+    &.flipped {
+      transform: rotateY(180deg);
+    }
+
+    &.matched {
+      background: none;
+      box-shadow: none;
+      border: none;
+
+      img {
+        opacity: 0.5;
+      }
+    }
+  }
+}

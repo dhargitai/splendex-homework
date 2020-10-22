@@ -1,11 +1,15 @@
+<div class="toolbar" role="banner">
+  <img width="200" alt="Splendex Logo" src="assets/images/splendex-logo.svg" />
+</div>
+
 <h1>Splendex Memory Game</h1>
 
 <label for="sizeSelector">Deck Size</label>
-<select id="sizeSelector">
-  <option>3</option>
-  <option>6</option>
-  <option>9</option>
-  <option>12</option>
+<select id="sizeSelector" [(ngModel)]="boardSize">
+  <option [value]="3">3</option>
+  <option [value]="6">6</option>
+  <option [value]="9">9</option>
+  <option [value]="12">12</option>
 </select>
 
-<button>Start new game</button>
+<button (click)="startNewGame()">Start new game</button>

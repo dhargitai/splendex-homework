@@ -3,13 +3,17 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-match',
   templateUrl: './match.component.html',
-  styleUrls: ['./match.component.scss']
+  styleUrls: ['./match.component.scss'],
 })
 export class MatchComponent implements OnInit {
+  isFlipped = false;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  flip() {
+    // $('.card').toggleClass('flipped');
+    this.isFlipped = true;
   }
-
 }
