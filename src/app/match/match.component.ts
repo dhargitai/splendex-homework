@@ -36,6 +36,15 @@ export class MatchComponent implements OnInit {
   ngOnInit(): void {
     this.boardSize = this.game.boardSize.value;
     this.generateBoard();
+
+    if (this.game.board.value) {
+      this.boardSize = this.game.board.value.length / 2;
+      this.board = this.game.board.value;
+    }
+
+    if (this.game.bestScore.value) {
+      this.bestScore = this.game.bestScore.value;
+    }
   }
 
   flip(index) {
@@ -65,7 +74,7 @@ export class MatchComponent implements OnInit {
     }
   }
 
-  private generateBoard() {
+  generateBoard() {
     const board = [];
     this.currentTries = 0;
     this.currentPair = [];
