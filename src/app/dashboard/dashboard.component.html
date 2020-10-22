@@ -6,10 +6,9 @@
 
 <label for="sizeSelector">Deck Size</label>
 <select id="sizeSelector" [(ngModel)]="boardSize">
-  <option [value]="3">3</option>
-  <option [value]="6">6</option>
-  <option [value]="9">9</option>
-  <option [value]="12">12</option>
+  <option [value]="value" *ngFor="let value of boardOptions">
+    {{ value }}
+  </option>
 </select>
 
 <button (click)="startNewGame()">Start new game</button>

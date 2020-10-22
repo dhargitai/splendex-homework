@@ -4,56 +4,38 @@
   <div role="controls">
     <label for="sizeSelector">Deck Size</label>
     <select id="sizeSelector" [(ngModel)]="boardSize">
-      <option [value]="3">3</option>
-      <option [value]="6">6</option>
-      <option [value]="9">9</option>
-      <option [value]="12">12</option>
+      <option [value]="value" *ngFor="let value of boardOptions">
+        {{ value }}
+      </option>
     </select>
 
-    <button (click)="startNewGame()">Start new game</button>
+    <button (click)="generateBoard()">Start new game</button>
   </div>
 </div>
 
 <div id="stats">
-  <div id="currentTries">Current tries: <span>0</span></div>
+  <div id="currentTries">
+    Current tries: <span>{{ currentTries }}</span>
+  </div>
 
   <div id="best">
     Best:
-    <div>9</div>
+    <div>{{ bestScore }}</div>
   </div>
 
-  <button id="restart">Restart</button>
+  <button id="restart" (click)="generateBoard()">Restart</button>
 </div>
 
 <div id="board">
-  <div class="card" (click)="flip(0)" [ngClass]="{ flipped: isFlipped }">
-    <div class="front"></div>
-    <div class="back">
-      <img src="assets/images/cards/angular.png" alt="" />
-    </div>
-  </div>
   <div
     class="card"
-    (click)="flip(1)"
-    [ngClass]="{ flipped: isFlipped, matched: isFlipped }"
+    (click)="flip(i)"
+    [ngClass]="{ flipped: isFlipped[i], matched: isMatched[i] }"
+    *ngFor="let card of board; let i = index"
   >
     <div class="front"></div>
-    <div class="back"><img src="assets/images/cards/react.png" alt="" /></div>
-  </div>
-  <div class="card" (click)="flip(2)" [ngClass]="{ flipped: isFlipped }">
-    <div class="front"></div>
-    <div class="back">2</div>
-  </div>
-  <div class="card" (click)="flip(3)" [ngClass]="{ flipped: isFlipped }">
-    <div class="front"></div>
-    <div class="back">2</div>
-  </div>
-  <div class="card" (click)="flip(4)" [ngClass]="{ flipped: isFlipped }">
-    <div class="front"></div>
-    <div class="back">2</div>
-  </div>
-  <div class="card" (click)="flip(5)" [ngClass]="{ flipped: isFlipped }">
-    <div class="front"></div>
-    <div class="back">2</div>
+    <div class="back">
+      <img [src]="'assets/images/cards/' + card + '.png'" alt="" />
+    </div>
   </div>
 </div>
