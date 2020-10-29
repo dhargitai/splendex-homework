@@ -8,15 +8,13 @@ import { GameService } from '../game.service';
   styleUrls: ['./match.component.scss'],
 })
 export class MatchComponent implements OnInit {
-  isFlipped: Array<boolean>;
-  isMatched: Array<boolean>;
   currentTries = 0;
   bestScore;
   boardSize;
   boardOptions = Array.apply(null, Array(8)).map(function (_, i) {
     return i + 3;
   });
-  board: Array<string>;
+  board: Array<{ image: string; isFlipped: boolean; isMatched: boolean }>;
   images = [
     'angular',
     'd3',
@@ -45,28 +43,42 @@ export class MatchComponent implements OnInit {
     if (this.game.bestScore.value) {
       this.bestScore = this.game.bestScore.value;
     }
+
+    if (this.game.currentTries.value) {
+      this.currentTries = this.game.currentTries.value;
+    }
   }
 
   flip(index) {
-    this.isFlipped[index] = true;
+    this.board[index].isFlipped = true;
     this.currentPair.push(index);
 
     if (this.currentPair.length === 2) {
       this.currentTries++;
-      if (this.board[this.currentPair[0]] === this.board[this.currentPair[1]]) {
-        this.isMatched[this.currentPair[0]] = true;
-        this.isMatched[this.currentPair[1]] = true;
+      if (
+        this.board[this.currentPair[0]].image ===
+        this.board[this.currentPair[1]].image
+      ) {
+        this.board[this.currentPair[0]].isMatched = true;
+        this.board[this.currentPair[1]].isMatched = true;
 
-        if (this.isMatched.filter((item) => !item).length === 0) {
+        if (this.board.filter((card) => !card.isMatched).length === 0) {
           if (!this.bestScore || this.bestScore > this.currentTries) {
             this.bestScore = this.currentTries;
           }
         }
+
+        this.game.save({
+          currentTries: this.currentTries,
+          board: this.board,
+          bestScore: this.bestScore,
+        });
       } else {
+        this.game.save({ currentTries: this.currentTries });
         const pair = [...this.currentPair];
         setTimeout(() => {
-          this.isFlipped[pair[0]] = false;
-          this.isFlipped[pair[1]] = false;
+          this.board[pair[0]].isFlipped = false;
+          this.board[pair[1]].isFlipped = false;
         }, 1000);
       }
 
@@ -74,26 +86,26 @@ export class MatchComponent implements OnInit {
     }
   }
 
-  generateBoard() {
+  generateBoard(saveGameState = false) {
     const board = [];
     this.currentTries = 0;
     this.currentPair = [];
-    this.isFlipped = [];
-    this.isMatched = [];
     for (let i = 0; i < this.boardSize; i++) {
       const randomImage = this.images[
         Math.floor(Math.random() * this.images.length)
       ];
-      board.push(randomImage);
-      board.push(randomImage);
-
-      this.isFlipped.push(false);
-      this.isFlipped.push(false);
-
-      this.isMatched.push(false);
-      this.isMatched.push(false);
+      board.push({ image: randomImage, isMatched: false, isFlipped: false });
+      board.push({ image: randomImage, isMatched: false, isFlipped: false });
     }
     this.board = this.shuffleArray(board);
+
+    if (saveGameState) {
+      this.game.save({
+        currentTries: this.currentTries,
+        board: this.board,
+        bestScore: this.bestScore,
+      });
+    }
   }
 
   private shuffleArray(array) {

@@ -28,6 +28,31 @@
   flex-flow: wrap;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 2em;
+
+  #restart {
+    background: none;
+    color: black;
+    border-radius: 3px;
+    border: 3px solid;
+  }
+
+  #best {
+    text-align: center;
+
+    div {
+      font-size: 3em;
+      font-weight: bold;
+    }
+  }
+
+  #currentTries {
+    font-weight: bold;
+
+    span {
+      font-weight: normal;
+    }
+  }
 }
 
 #board {
@@ -80,7 +105,7 @@
     &.matched {
       background: none;
       box-shadow: none;
-      border: none;
+      border: 1px solid #eee;
 
       img {
         opacity: 0.5;

@@ -9,7 +9,7 @@
       </option>
     </select>
 
-    <button (click)="generateBoard()">Start new game</button>
+    <button (click)="generateBoard(true)">Start new game</button>
   </div>
 </div>
 
@@ -18,24 +18,24 @@
     Current tries: <span>{{ currentTries }}</span>
   </div>
 
-  <div id="best">
+  <div id="best" *ngIf="bestScore">
     Best:
     <div>{{ bestScore }}</div>
   </div>
 
-  <button id="restart" (click)="generateBoard()">Restart</button>
+  <button id="restart" (click)="generateBoard(true)">Restart</button>
 </div>
 
 <div id="board">
   <div
     class="card"
     (click)="flip(i)"
-    [ngClass]="{ flipped: isFlipped[i], matched: isMatched[i] }"
+    [ngClass]="{ flipped: card.isFlipped, matched: card.isMatched }"
     *ngFor="let card of board; let i = index"
   >
     <div class="front"></div>
     <div class="back">
-      <img [src]="'assets/images/cards/' + card + '.png'" alt="" />
+      <img [src]="'assets/images/cards/' + card.image + '.png'" alt="" />
     </div>
   </div>
 </div>
